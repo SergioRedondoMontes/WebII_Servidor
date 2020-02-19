@@ -1,0 +1,49 @@
+
+body {
+	color:#000000;
+	background-color: #ffffff;
+	font-family: arial, verdana, sans-serif;
+}
+
+
+.mansalva {
+	font-family: 'Mansalva', cursive;
+	color:green;
+	font-size:large;
+
+}
+
+.centrado {
+	text-align:center;	
+}
+
+.justificado {
+	text-align:justify;	
+}
+
+.otras {
+	font-size:25px;
+}
+
+span {
+	font-variant:small-caps;
+	color: #0000FF;
+}
+
+strong {
+	font-weight:900;
+}
+
+p.dancing {
+	font-family: 'Dancing Script', cursive;
+	font-size:small;	
+	font-style:italic;
+}
+
+.column {
+	padding: 20px;
+	width: 200px;
+	float: left;	
+}
+
+	
