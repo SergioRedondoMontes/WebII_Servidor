@@ -10,16 +10,26 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'EstoDeflask_wtfEsLaPolla!'
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///.database/data.db'
-app.config['SQLALCHEMY_TRAK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./database/data.db'
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+'''
+user1 = User(username='manoel',email='manoel.alonso@u-tad.com',password='12345678')   
+db.session.add(user1)
+db.session.commit()
+user2 = User(username='manoel2', email='manoel2.alonso@u-tad.com',password='12345678')   
+db.session.add(user2)
+db.session.commit()
+user = User.query.filter_by(id=1).first()
+'''
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(80))
+   id = db.Column(db.Integer, primary_key=True)
+   username = db.Column(db.String(15), unique=True)
+   email = db.Column(db.String(50), unique=True)
+   password = db.Column(db.String(80))
 
 
 class LoginForm(FlaskForm):
