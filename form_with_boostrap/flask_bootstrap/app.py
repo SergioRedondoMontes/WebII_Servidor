@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Length, Email
+from wtforms import StringField, PasswordField, BooleanField, SelectField
+from wtforms.validators import InputRequired, Length, Email, NoneOf, Regexp
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
@@ -17,9 +17,10 @@ class LoginForm(FlaskForm):
 
 
 class SignupForm(FlaskForm):
-    username = StringField('User Name', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80)])
+    username = StringField('User Name', validators=[InputRequired(), Length(min=4, max=15), NoneOf(['Pepito','Juanito'], message="Usuario no valido")])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80), Regexp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")])
     email = StringField('Email address', validators=[InputRequired(), Email(message='Invalid email'), Length(max=15)])
+    language = SelectField(u'Programming Lenguaje', choices=[('cpp', 'c++'), ('py', 'python')])
 
 
 @app.route('/')
@@ -46,8 +47,8 @@ def signup():
     form = SignupForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            return generate_password_hash(form.password.data, method='sha256')
-#            return redirect(url_for('login'))
+            return redirect(url_for('login'))
+            #return generate_password_hash(form.password.data, method='sha256')
         else:
             pass
     else:
