@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SelectField
@@ -41,7 +41,7 @@ def login():
             if form.password.data == '12345678':
                 return redirect(url_for('dashboard'))
             else:
-                return "Access denied"
+                flash("Access denied")
     else:
         pass
     return render_template("login.html", page="login", form=form, current_time=datetime.utcnow())
@@ -64,6 +64,16 @@ def signup():
 @app.route('/dashboard')
 def dashboard():
     return render_template("dashboard.html", page="dashboard")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 
 if __name__ == '__main__':
